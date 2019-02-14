@@ -1,22 +1,33 @@
 <template>
   <div class="wrapper">
+    欢迎登录
       <form v-if="!isReg">
-        <div>用户名：</div>
-        <input type="text" v-model="name">
-        <div>密码：</div>
-        <input type="password" v-model="password">
-        <button type="button" @click="login()">登录</button>
-        <button type="button" @click="reg()">注册</button>
+        <div>
+          <span>登录名&nbsp;</span>
+          <input type="text" v-model="name">
+        </div>
+        <div>
+          <span>&nbsp;&nbsp;&nbsp;密码&nbsp;</span>
+          <input type="password" v-model="password">
+        </div>
+        <button class="button" type="button" @click="login()">登录</button>
+        <button class="button" type="button" @click="reg()">注册</button>
       </form>
       <form v-else>
-        <div>用户名：</div>
-        <input type="text" v-model="name">
-        <div>密码：</div>
-        <input type="password" v-model="password">
-        <div>再次输入密码：</div>
-        <input type="password" v-model="repeat">
-        <button type="button" @click="addUser()">确定</button>
-        <button type="button" @click="cancle()">取消</button>
+        <div>
+          <span>用户名&nbsp;</span>
+          <input type="text" v-model="name">
+        </div>
+        <div>
+          <span>&nbsp;&nbsp;&nbsp;密码&nbsp;</span>
+          <input type="password" v-model="password">
+        </div>
+        <div>
+          <span>确认密码&nbsp;</span>
+          <input type="password" v-model="repeat">
+        </div>
+        <button class="button" type="button" @click="addUser()">确定</button>
+        <button class="button" type="button" @click="cancle()">取消</button>
       </form>
   </div>
 </template>
@@ -68,5 +79,27 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.wrapper{}
+.wrapper {
+  text-align: center;
+  line-height: 30px;
+  padding-top: 10px;
+}
+.wrapper form input {
+  border: 1px solid #c4cfc9;
+  border-radius: 5px;
+  height: 20px;
+}
+.button {
+  width: 100px;
+  height: 25px;
+  color: #7bc8a4;
+  background: #ffffff;
+  border-radius: 1em;
+  border: 1px solid;
+  margin: 20px 0 0 10px;
+}
+.button:hover {
+  color: #fff;
+  background: #7bc8a4;
+}
 </style>
