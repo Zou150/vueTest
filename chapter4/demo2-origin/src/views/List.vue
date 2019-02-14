@@ -3,7 +3,8 @@
     <ul>
       <li v-for="(item,index) in pageLists"
           :key="index">
-        {{item.titile}}-{{item.content}}</li>
+        {{item.title}}-{{item.content}}
+      </li>
     </ul>
   </div>
 </template>
@@ -21,7 +22,7 @@ export default {
   watch:{},
   computed:{
     pageLists() {
-      return store.state.llists
+      return store.state.lists
     }
   },
   methods:{},

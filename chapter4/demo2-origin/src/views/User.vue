@@ -1,5 +1,7 @@
 <template>
-  <div class="wrapper">User</div>
+  <div class="wrapper">User
+      <router-link :to="{name: 'add'}">添加</router-link>
+  </div>
 </template>
 
 <script>
