@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view />
-    <ul class="fotter">
+    <ul class="footer">
         <li class="icons"><router-link :to="{name: 'list'}">新闻列表</router-link></li>
         <li class="icons"><router-link :to="{name: 'user'}">个人中心</router-link></li>
     </ul>
@@ -28,7 +28,7 @@ export default {
 li{
     list-style: none;
 }
-.fotter{
+.footer{
     position: fixed;
     width: 100%;
     height: 60px;

@@ -22,7 +22,7 @@ export default {
   watch:{},
   computed:{
     pageLists() {
-      return store.state.lists
+      return store.state.list
     }
   },
   methods:{},
