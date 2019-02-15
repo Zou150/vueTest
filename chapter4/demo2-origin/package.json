@@ -1,5 +1,5 @@
 {
-  "name": "demo-origin",
+  "name": "demo2-origin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,15 +7,15 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "vue": "^2.5.21",
+    "vue": "^2.5.22",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.3.0",
-    "@vue/cli-service": "^3.3.0",
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
     "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
   }
 }

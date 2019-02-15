@@ -1,4 +1,4 @@
-# demo-origin
+# demo2-origin
 
 ## Project setup
 ```
