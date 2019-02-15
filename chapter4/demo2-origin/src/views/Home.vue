@@ -53,4 +53,7 @@ li{
       }
     }
 }
+.footer a {
+    text-decoration: none;
+}
 </style>
