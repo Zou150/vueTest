@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/vue/2.6.9/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <h3>添加爱好</h3>
+      <div>
+        <label for="">Id:</label>
+        <input type="text" v-model='id'>
+        <label for="">name:</label>
+        <input type="text" v-model='name'> 
+        <button @click='add'>添加</button>
+        
+        <label for="">搜索关键字:</label>
+        <input type="text" v-model='keywords'> 
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Ctime</th>
+          <th>Opeartion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for='item in list'>
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.ctime}}</td>
+          <td>
+            <a href="" @click.prevent='del(item.id)'>删除</a>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+
+      <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+              id:'',
+              name:'',
+              keywords: '',
+              list: [
+                  {id: 1, name: '手办',ctime: new Date()},
+                  {id: 2, name: '折纸',ctime: new Date()},
+              ]
+            },
+            methods: {
+              add() {
+                var hobby = {id: this.id,name: this.name,ctime: new Date()}
+                this.list.push(hobby)
+                this.id = ''
+                this.name = ''
+              },
+              del(id) {
+                this.list.some((item,i) => {
+                    if(item.id == id) {
+                        this.list.splice(i,1)
+                        return true;
+                    }
+                })
+              }
+            }
+        })
+      </script>
+  </div>
+</body>
+</html>
