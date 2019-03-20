@@ -9,6 +9,8 @@
 
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/vue/2.6.9/vue.min.js"></script>
+  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 </head>
 
 <body>
@@ -60,6 +62,7 @@
 
   <div id="app2">
     <p v-fontweight="200" v-fontsize='40'>{{dt | dtFormat()}}</p>
+    <input type="button"  value="get请求" @click="getInfo">
   </div>
   <script>
 
@@ -159,7 +162,13 @@
       data: {
         dt: new Date()
       },
-      menthods:{},
+      methods:{
+        getInfo() {
+          axios.get('http://vue.studyit.io/api/getlunbo').then(function (response) {
+            console.log(response);
+          })
+        }
+      },
       filters: {  //定义私有过滤器
         dtFormat(dateStr,pattern='') {
           var dt = new Date(dateStr)
@@ -182,6 +191,7 @@
         },
         'fontsize': function(el,binding) {
           el.style.fontSize = parseInt(binding.value)+'px'
+          
         }
       }
     })
