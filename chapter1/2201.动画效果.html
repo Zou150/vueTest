@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.bootcss.com/vue/2.6.9/vue.min.js"></script>
+    <link href="https://cdn.bootcss.com/animate.css/3.7.0/animate.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <label for="input-id" class="col-sm-2">用户：</label>
+            <input type="text" value="用户" v-model="id" />
+        </div>
+        <div>
+            <label for="input-id" class="col-sm-2">评论：</label>
+            <input type="text" value="评论" v-model="content" />
+        </div>
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">评论人： {{ item.user }}</span>
+                {{ item.content }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var commentBox = {
+            template: "#temp1"
+        };
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                id: '',
+                content: '',
+                list: [{
+                        id: Date.now(),
+                        user: "手办",
+                        content: "nihao "
+                    },
+                    {
+                        id: Date.now(),
+                        user: "手办",
+                        content: "123 "
+                    },
+                    {
+                        id: Date.now(),
+                        user: "手办",
+                        content: "2333 "
+                    }
+                ]
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

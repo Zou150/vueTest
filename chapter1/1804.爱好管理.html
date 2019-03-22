@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
   <title>Document</title>
 
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/vue/2.6.9/vue.min.js"></script>
   
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
@@ -62,8 +63,9 @@
 
   <div id="app2">
     <p v-fontweight="200" v-fontsize='40'>{{dt | dtFormat()}}</p>
-    <input type="button"  value="get请求" @click="getInfo">
+    <input type="button"  value="get请求" @click="getInfo(data)">
   </div>
+
   <script>
 
     //定义一个全局过滤器，修改时间显示格式
@@ -162,10 +164,18 @@
       data: {
         dt: new Date()
       },
+      created() {
+        this.getInfo(data)
+      },
       methods:{
-        getInfo() {
-          axios.get('http://vue.studyit.io/api/getlunbo').then(function (response) {
-            console.log(response);
+        getInfo(data) {
+          this.axios.get('http:/192.168.1.15:3000').then(result => {
+            var result = result.body
+            if(result.status === 0 ) {
+              this.list = result.message
+            }else {
+              alert('数据获取失败了！')
+            }
           })
         }
       },
