@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*">
+  <title>Document</title>
+
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/vue/2.6.9/vue.min.js"></script>
+  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+</head>
+
+<body>
+  <div id="app">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">添加爱好</h3>
+      </div>
+      <div class="panel-body form-inline">
+        <label>Id:
+          <input type="text" class="form-control" v-model='id'>
+        </label>
+
+        <label for="">name:
+          <input type="text" class="form-control" v-model='name' @keyup.enter='add'>
+        </label>
+
+        <button type="button" value="添加" class="btn btn-primary" @click='add'>添加</button>
+
+        <label for="">搜索关键字:
+          <input type="text" class="form-control" v-model='keywords' v-focus v-color="'blue'">
+        </label>
+      </div>
+    </div>
+
+    <br />
+
+    <table class="table table-bordered">
+      <thead>
+        <tr id="border">
+          <th>Id</th>
+          <th>Name</th>
+          <th>Ctime</th>
+          <th>Opeartion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for='item in search(keywords)' :key='item.id'>
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.ctime | ctimeFormat()}}</td>
+          <td>
+            <a href="" @click.prevent='del(item.id)'>删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="app2">
+    <p v-fontweight="200" v-fontsize='40'>{{dt | dtFormat()}}</p>
+    <input type="button"  value="get请求" @click="getInfo(data)">
+  </div>
+
+  <script>
+
+    //定义一个全局过滤器，修改时间显示格式
+    Vue.filter('ctimeFormat', function (dateStr, pattern = '') {
+      var dt = new Date(dateStr)
+
+      var y = dt.getFullYear()
+      var m = (dt.getMonth() + 1).toString().padStart(2,'0')
+      var d = dt.getDate().toString().padStart(2,'0')
+
+      // return y+'-'+m+'-'+d
+      if (pattern.toLowerCase() == 'yyyy-mm-dd') {
+        return `${y}-${m}-${d}`
+      } else {
+        var hh = dt.getHours().toString().padStart(2,'0')
+        var mm = dt.getMinutes().toString().padStart(2,'0')
+        var ss = dt.getSeconds().toString().padStart(2,'0')
+
+        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+      }
+
+    })
+
+    //自定义一个 获得焦点的指令
+    Vue.directive('focus',{
+      bind: function(el) {
+
+      },
+      inserted: function(el) {
+        el.focus()
+      },
+      updated: function(el) {
+
+      }
+    })
+
+    //自定义 一个 设置字体颜色的 指令
+    Vue.directive('color', {
+      bind: function(el,binding) {
+        el.style.color = binding.value
+      }
+    })
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        id: '',
+        name: '',
+        keywords: '',
+        list: [{
+            id: 1,
+            name: '手办',
+            ctime: new Date()
+          },
+          {
+            id: 2,
+            name: '折纸',
+            ctime: new Date()
+          },
+        ]
+      },
+      methods: {
+        add() {
+          var hobby = {
+            id: this.id,
+            name: this.name,
+            ctime: new Date()
+          }
+          this.list.push(hobby)
+          this.id = ''
+          this.name = ''
+        },
+        del(id) {
+          this.list.some((item, i) => {
+            if (item.id == id) {
+              this.list.splice(i, 1)
+              return true;
+            }
+          })
+        },
+        search(keywords) {
+          var newlist = []
+          this.list.forEach(item => {
+            if (item.name.indexOf(keywords) != -1) {
+              newlist.push(item)
+            }
+          })
+          return newlist
+        }
+      }
+    })
+
+    //定义一个局部过滤器，修改时间显示格式
+    var vm2 = new Vue({
+      el: '#app2',
+      data: {
+        dt: new Date()
+      },
+      created() {
+        this.getInfo(data)
+      },
+      methods:{
+        getInfo(data) {
+          this.axios.get('http:/192.168.1.15:3000').then(result => {
+            var result = result.body
+            if(result.status === 0 ) {
+              this.list = result.message
+            }else {
+              alert('数据获取失败了！')
+            }
+          })
+        }
+      },
+      filters: {  //定义私有过滤器
+        dtFormat(dateStr,pattern='') {
+          var dt = new Date(dateStr)
+
+          var y = dt.getFullYear()
+          var m = (dt.getMonth()+1).toString().padStart(2,'0')
+          var d = dt.getDate().toString().padStart(2,'0')
+          var hh = dt.getHours().toString().padStart(2,'0')
+          var mm = dt.getMinutes().toString().padStart(2,'0')
+          var ss = dt.getSeconds().toString().padStart(2,'0')
+
+          return `${y}-${m}-${d} ${hh}:${mm}:${ss}~~~~~~~~~`
+        }
+      },
+      directives: { //自定义私有指令
+        'fontweight': {
+          bind: function(el,binding) {
+            el.style.fontWeight = binding.value
+          }
+        },
+        'fontsize': function(el,binding) {
+          el.style.fontSize = parseInt(binding.value)+'px'
+          
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>
