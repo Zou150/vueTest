@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+                        let a,
+            barObj = {
+                msg: 'bar的this指向'
+            };
+        fooObj = {
+            msg: 'foo的this指向'
+        };
+        bar.call(barObj); // 将bar的this指向barObj
+        foo.call(fooObj); // 将foo的this指向fooObj
+        function foo() {
+            a(); // 结果：{ msg: 'bar的this指向' }
+        }
+
+        function bar() {
+            a = () => {
+                console.log(this, 'this指向定义的时候外层第一个普通函数'); // 
+            }; // 在bar中定义 this继承于bar函数的this指向
+        }
+    </script>
+</body>
+
+</html>
