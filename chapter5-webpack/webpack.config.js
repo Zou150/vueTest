@@ -1,32 +1,41 @@
 const path = require('path');
+// const webpack = require('webpack');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const webpack = require('webpack');
 
 module.exports = {
-  // entry: './src/index.js',
+  mode: 'development',
   entry: {
     app: './src/index.js',
-    print111: './src/print.js'
+    // another: './src/another-module.js',
+    // print: './src/print.js'
   },
   // devtool: 'inline-source-map',
+  // devServer: {
+  //   contentBase: './dist',
+  //   hot: true
+  // },
   // plugins: [
-  //   new CleanWebpackPlugin(),
+  //   // new CleanWebpackPlugin(),
   //   new HtmlWebpackPlugin({
   //     title: 'Output Management'
+  //   }),
+  //   new config.optimize.splitChunks({
+  //     name: 'common'
   //   })
+  //   // new webpack.NamedModulesPlugin(),
+  //   // new webpack.HotModuleReplacementPlugin()
   // ],
   output: {
-    // filename: 'bundle.js',
     filename: '[name].bundle.js',
+    // chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   // module: {
   //   rules: [{
   //       test: /\.css$/,
-  //       use: [
-  //         'style-loader',
-  //         'css-loader'
-  //       ]
+  //       use: ['style-loader','css-loader']
   //     },
   //     {
   //       test: /\.(png|svg|jpg|gif)$/,
@@ -53,5 +62,11 @@ module.exports = {
   //       ]
   //     }
   //   ]
-  // }
+  // },
+  optimization: {
+    usedExports: true
+  //   splitChunks: {
+  //     chunks: 'all'
+  //   }
+  }
 }
